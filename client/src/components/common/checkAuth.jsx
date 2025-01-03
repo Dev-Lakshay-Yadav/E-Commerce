@@ -3,6 +3,19 @@ import { Navigate, useLocation } from "react-router-dom"
 function CheckAuth({ isAuthenticated, user, children }) {
   const location = useLocation(); //return the current location or we can say that the current route of that page
 
+  if(location.pathname === '/'){
+    if(!isAuthenticated){
+      return <Navigate to="/auth/login"/>
+    }
+    else{
+      if(user?.role === "admin"){
+        return <Navigate to="/admin/dashboard" />
+      }
+      else{
+        return <Navigate to="/shop/home" />
+      }
+    }
+  }
 
   // agar user authenticated nhi hai and and  user /login ya /registe route par bhi nhi hai to use /auth/login route par bhej do
   if (!isAuthenticated && !(location.pathname.includes("login") || location.pathname.includes("register"))) 

@@ -22,7 +22,6 @@ function AuthRegister() {
   function onSubmit(event) {
     event.preventDefault()         //taki page refresh na ho form submit hone par
     dispatch(registerUser(formData)).then((data) => {
-      console.log(data)
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message,
@@ -43,9 +42,6 @@ function AuthRegister() {
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Create new account</h1>
-        <p className="mt-2">Already have am account
-          <Link to='/auth/login' className="font-medium ml-2 text-primary hover:underline">Login</Link>
-        </p>
       </div>
       <CommonForm
         formControls={registerFormControls}
@@ -54,6 +50,11 @@ function AuthRegister() {
         setFormData={setFormData}
         onSubmit={onSubmit}
       />
+       <div className="text-center">
+        <p className="mt-2">Already have am account
+          <Link to='/auth/login' className="font-medium ml-2 text-primary hover:underline">Login</Link>
+        </p>
+      </div>
     </div>
   )
 }
