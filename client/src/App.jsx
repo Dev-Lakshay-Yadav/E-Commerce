@@ -40,9 +40,16 @@ function App() {
       {/* <h1>Header Component</h1> */}
       <Routes>
         <Route path="/" element={
-          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-        </CheckAuth>
-        }/>
+        <ShoppingLayout/>
+        }>
+          <Route path="/" element={<ShoppingHome/>}/>
+          <Route path="listing" element={<ShoppingListing/>}/>
+          <Route path="checkout" element={<ShoppinCheckout/>}/>
+          <Route path="account" element={<ShoppingAccount/>}/>
+          <Route path="paypal-return" element={<PaypalReturnPage/>}/>
+          <Route path="payment-success" element={<PaymentSuccessPage/>}/>
+          <Route path="search" element={<SearchProducts/>}/>
+        </Route>
         <Route path="/auth" element={
           <CheckAuth isAuthenticated={isAuthenticated} user={user}>
             <AuthLayout/>

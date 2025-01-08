@@ -11,7 +11,7 @@ export const getSearchResults = createAsyncThunk(
   "/order/getSearchResults",
   async (keyWord) => {
     const response = await axios.get(
-      `http://localhost:5000/api/shop/search/${keyWord}`
+      `${import.meta.env.VITE_API_URL}/api/shop/search/${keyWord}`
     );
     return response.data;
   }

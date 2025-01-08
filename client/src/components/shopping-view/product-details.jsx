@@ -12,15 +12,17 @@ import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
+import { useNavigate } from "react-router-dom";
 
 function productDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user,isAuthenticated } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { reviews } = useSelector((state) => state.shopReview);
   const { toast } = useToast();
+  const navigate = useNavigate()
 
   function handleRatingChange(getRating) {
     setRating(getRating);
@@ -148,10 +150,13 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
               <Button
                 className="w-full"
                 onClick={() =>
-                  handleAddToCart(
-                    productDetails?._id,
-                    productDetails?.totalStock
-                  )
+                (isAuthenticated ? handleAddToCart(
+                  productDetails?._id,
+                  productDetails?.totalStock
+                ) : toast({
+                  title : 'Please Login First',
+                  variant: "destructive"
+                }) )
                 }
               >
                 Add to Cart
@@ -202,7 +207,10 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
                 placeholder="Write a Review..."
               />
               <Button
-                onClick={handleAddReview}
+                onClick={()=> isAuthenticated ? handleAddReview : toast({
+                  title : 'Please Login First',
+                  variant: "destructive"
+                })}
                 disabled={reviewMsg.trim() === ""}
               >
                 Submit

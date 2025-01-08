@@ -85,7 +85,6 @@ function ShoppingListing() {
 
 
   function handleAddToCart(getCurrentProductId,getTotalStock) {
-    console.log(cartItems,"cartItems")
     let getCartItems = cartItems.items || [];
     if(getCartItems.length){
       const indexOfCurrentItem = getCartItems.findIndex(item => item.productId === getCurrentProductId )
