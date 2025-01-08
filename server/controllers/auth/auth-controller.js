@@ -72,7 +72,7 @@ export const loginUser = async (req, res) => {
     ); // this secret key is used to parse the token and token gets expires in 60 minutes
 
     // Token ko cookie mein set kar diya
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    res.cookie("token", token, { httpOnly: true, secure: true }).json({
       success: true,
       message: "Logged in Successfully",
       user: {
