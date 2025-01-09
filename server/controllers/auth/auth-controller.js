@@ -71,10 +71,24 @@ export const loginUser = async (req, res) => {
       { expiresIn: "60m" }
     ); // this secret key is used to parse the token and token gets expires in 60 minutes
 
+    //   @#$%     locally cookie setup k liye      @#$%^
     // Token ko cookie mein set kar diya
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    // res.cookie("token", token, { httpOnly: true, secure: false }).json({       // secure : true iss se browser pr cookei store to hogi but refresh hone pr vanish ho jaegi ye only local ka code hai not for live
+    //   success: true,
+    //   message: "Logged in Successfully",
+    // user: {
+    //   email: checkUser.email,
+    //   role: checkUser.role,
+    //   id: checkUser._id,
+    //   userName: checkUser.userName,
+    // },
+    // });
+
+    //   @#$% live cookie setup k liye  @#$%
+    res.status(200).json({
       success: true,
-      message: "Logged in Successfully",
+      message: "Logged in successfully",
+      token,
       user: {
         email: checkUser.email,
         role: checkUser.role,
@@ -99,9 +113,34 @@ export const logoutUser = (req, res) => {
   });
 };
 
-// auth middleware
+
+// // auth middleware  for local token
+// export const authMiddleware = async (req, res, next) => {
+//   const token = req.cookies.token;
+//   if (!token) {
+//     return res.status(401).json({
+//       success: false,
+//       message: "Unauthorized user!",
+//     });
+//   }
+//   try {
+//     const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     res.status(401).json({
+//       success: false,
+//       message: "Unauthorized user!",
+//     });
+//   }
+// };
+
+
+
+// auth middleware for live token
 export const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]
   if (!token) {
     return res.status(401).json({
       success: false,
