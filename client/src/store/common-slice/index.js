@@ -30,6 +30,7 @@ export const addFeatureImage = createAsyncThunk(
 );
 
 
+
 export const deleteFeatureImage = createAsyncThunk(
   "/feature/deleteFeatureImage",
   async (id) => {
@@ -60,3 +61,4 @@ const commonSlice = createSlice({
 });
 
 export default commonSlice.reducer;
+

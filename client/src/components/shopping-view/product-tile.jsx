@@ -2,16 +2,12 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
-import { useSelector } from "react-redux";
-import { useToast } from "../ui/use-toast";
 
 function ShoppingProductTile({
   product,
   handleGetProductDetails,
   handleAddToCart,
 }) {
-  const {isAuthenticated} = useSelector(state => state.auth)
-  const {toast} = useToast()
   return (
     <Card className="w-full max-w-sm mx-auto">
       <div onClick={() => handleGetProductDetails(product?._id)}>
@@ -68,10 +64,7 @@ function ShoppingProductTile({
           </Button>
         ) : (
           <Button
-            onClick={() => isAuthenticated ? handleAddToCart(product?._id, product?.totalStock) : toast({
-              title : 'Please Login First',
-              variant: "destructive"
-            }) }
+            onClick={() => handleAddToCart(product?._id, product?.totalStock)}
             className="w-full"
           >
             Add to cart

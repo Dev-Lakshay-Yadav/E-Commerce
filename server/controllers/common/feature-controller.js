@@ -37,7 +37,6 @@ export const getFeatureImage = async (req,res)=>{
     }
 }
 
-
 export const deleteFeatureImage = async (req,res)=>{
     try{
         const {id} = req.params

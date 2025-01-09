@@ -73,18 +73,17 @@ function AdminProducts() {
         });
   }
 
-  function handleDelete(getCurrentProductId) {
-    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchAllProducts());
+  function handleDelete(getCurrentProductId){
+    dispatch(deleteProduct(getCurrentProductId)).then(data => {
+      if(data?.payload?.success){
+        dispatch(fetchAllProducts())
       }
-    });
+    })
   }
 
   // product add karte time add button disabled rahe
   function isFormValid() {
     return Object.keys(formData)
-      .filter((key) => key !== "salePrice") // Exclude 'salePrice' from validation
       .map((key) => formData[key] !== "")
       .every((item) => item);
   }
@@ -102,7 +101,7 @@ function AdminProducts() {
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         {productList && productList.length > 0
-          ? productList.map((productItem, index) => (
+          ? productList.map((productItem,index) => (
               <AdminProductTile
                 setFormData={setFormData}
                 setOpenCreateProductsDialog={setOpenCreateProductsDialog}

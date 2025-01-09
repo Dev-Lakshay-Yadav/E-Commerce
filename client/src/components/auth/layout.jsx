@@ -8,7 +8,7 @@ function AuthLayout() {
                     <h1 className="text-4xl font-extrabold tracking-tight">Welcome to Ecommerce shopping</h1>
                 </div>
             </div> */}
-            <div className="flex flex-1 items-center justify-center bg-background px-1 py-12 sm:px-6 lg:px-8 bg-gray-900 text-white">
+            <div className="flex flex-1 items-center justify-center bg-background px-1 py-12 sm:px-6 lg:px-8 bg-gray-500 text-white">
                 <Outlet/>
             </div>
         </div>

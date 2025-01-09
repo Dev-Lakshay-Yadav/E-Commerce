@@ -29,8 +29,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    const token = JSON.parse(sessionStorage.getItem('token'))
-    dispatch(checkAuth(token))
+    dispatch(checkAuth())
   },[dispatch])
 
   if(isLoading) return <Skeleton className="w-full bg-black h-[600px]" />
@@ -41,16 +40,9 @@ function App() {
       {/* <h1>Header Component</h1> */}
       <Routes>
         <Route path="/" element={
-        <ShoppingLayout/>
-        }>
-          <Route path="/" element={<ShoppingHome/>}/>
-          <Route path="listing" element={<ShoppingListing/>}/>
-          <Route path="checkout" element={<ShoppinCheckout/>}/>
-          <Route path="account" element={<ShoppingAccount/>}/>
-          <Route path="paypal-return" element={<PaypalReturnPage/>}/>
-          <Route path="payment-success" element={<PaymentSuccessPage/>}/>
-          <Route path="search" element={<SearchProducts/>}/>
-        </Route>
+          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        </CheckAuth>
+        }/>
         <Route path="/auth" element={
           <CheckAuth isAuthenticated={isAuthenticated} user={user}>
             <AuthLayout/>

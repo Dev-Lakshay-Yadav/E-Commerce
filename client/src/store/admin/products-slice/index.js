@@ -58,6 +58,7 @@ export const deleteProduct = createAsyncThunk(
     const result = await axios.delete(
       `${import.meta.env.VITE_API_URL}/api/admin/products/delete/${id}`
     );
+
     return result?.data;
   }
 );

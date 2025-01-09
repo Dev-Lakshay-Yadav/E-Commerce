@@ -31,7 +31,7 @@ export const updateOrderStatus = createAsyncThunk(
   "/order/updateOrderStatus",
   async ({ id, orderStatus }) => {
     const response = await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/admin/orders/update/${id}`,
+      `${import.meta.env.VITE_API_URL}api/admin/orders/update/${id}`,
       {
         orderStatus,
       }

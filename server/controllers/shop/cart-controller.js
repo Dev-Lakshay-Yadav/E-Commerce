@@ -51,17 +51,15 @@ export const addToCart = async (req, res) => {
     }
   };
 
-  export const fetchCartItems = async (req, res) => {
+
+export const fetchCartItems = async (req, res) => {
     try {
       const { userId } = req.params;
   
-      // If no userId is provided, return an empty cart response
       if (!userId) {
-        return res.status(200).json({
-          success: true,
-          data: {
-            items: [],
-          },
+        return res.status(400).json({
+          success: false,
+          message: "User id is manadatory!",
         });
       }
   
@@ -70,28 +68,22 @@ export const addToCart = async (req, res) => {
         select: "image title price salePrice",
       });
   
-      // If the cart doesn't exist, return an empty cart response
       if (!cart) {
-        return res.status(200).json({
-          success: true,
-          data: {
-            items: [],
-          },
+        return res.status(404).json({
+          success: false,
+          message: "Cart not found!",
         });
       }
   
-      // Filter out invalid items where the productId is missing
       const validItems = cart.items.filter(
         (productItem) => productItem.productId
       );
   
-      // If there are invalid items, update the cart
       if (validItems.length < cart.items.length) {
         cart.items = validItems;
         await cart.save();
       }
   
-      // Populate cart items
       const populateCartItems = validItems.map((item) => ({
         productId: item.productId._id,
         image: item.productId.image,
@@ -101,7 +93,6 @@ export const addToCart = async (req, res) => {
         quantity: item.quantity,
       }));
   
-      // Return the cart data, even if it's empty
       res.status(200).json({
         success: true,
         data: {
@@ -113,11 +104,11 @@ export const addToCart = async (req, res) => {
       console.log(error);
       res.status(500).json({
         success: false,
-        message: "An error occurred while fetching the cart.",
+        message: "Error",
       });
     }
   };
-  
+
 export const updateCartItemQty = async (req, res) => {
     try {
       const { userId, productId, quantity } = req.body;

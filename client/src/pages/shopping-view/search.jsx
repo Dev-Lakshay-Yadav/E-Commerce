@@ -38,6 +38,7 @@ function SearchProducts() {
 
 
   function handleAddToCart(getCurrentProductId,getTotalStock) {
+      console.log(cartItems,"cartItems")
       let getCartItems = cartItems.items || [];
       if(getCartItems.length){
         const indexOfCurrentItem = getCartItems.findIndex(item => item.productId === getCurrentProductId )
@@ -78,6 +79,7 @@ function SearchProducts() {
         if (productDetails !== null) setOpenDetailsDialog(true);
       }, [productDetails]);
 
+  console.log(searchResults, "search");
 
   return (
     <div className="container mx-auto md:px-6 px-4 py-8">

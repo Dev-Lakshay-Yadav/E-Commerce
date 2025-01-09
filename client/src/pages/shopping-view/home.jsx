@@ -231,12 +231,12 @@ function ShoppingHome() {
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <div className="w-12 h-12 mb-4 text-primary overflow-hidden" >
-                  <img
-                    src={brandItem.img_Src}
-                    alt="Images"
-                    className="w-full h-full object-cover object-center"
-                  />
+                  <div className="w-12 h-12 mb-4 text-primary overflow-hidden">
+                    <img
+                      src={brandItem.img_Src}
+                      alt="Images"
+                      className="w-full h-full object-cover object-center"
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -255,7 +255,10 @@ function ShoppingHome() {
             {productList && productList.length > 0
               ? productList
                   .filter(
-                    (productItem) => productItem?.salePrice && productItem.price > productItem.salePrice && productItem?.totalStock < 10
+                    (productItem) =>
+                      productItem?.salePrice &&
+                      productItem.price > productItem.salePrice &&
+                      productItem?.totalStock < 10
                   ) // Filter products
                   .map((productItem, index) => (
                     <ShoppingProductTile
