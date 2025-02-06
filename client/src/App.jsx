@@ -22,6 +22,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
+import LoadingState from "./components/common/LoadingState";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -41,7 +42,7 @@ function App() {
     dispatch(checkAuth(token));
   }, [dispatch]);
 
-  if (isLoading) return <Skeleton className="w-full bg-black h-[600px]" />;
+  if (isLoading) return <LoadingState/>;
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
