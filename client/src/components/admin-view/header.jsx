@@ -13,7 +13,7 @@ function AdminHeader({ setOpen }) {
 
     dispatch(resetTokenAndCredentials()); // for live token
     sessionStorage.clear(); // for live token
-    navigate("/auth/login"); // for live token
+    navigate("/"); // for live token
   }
 
   return (

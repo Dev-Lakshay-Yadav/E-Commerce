@@ -128,20 +128,20 @@ function HeaderRightContent({ isAuthenticated }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="bg-black">
-              <AvatarFallback className="bg-black text-white font-extrabold">
+              <AvatarFallback className="bg-black text-white font-extrabold cursor-pointer">
                 {user?.userName[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" className="w-56">
+          <DropdownMenuContent side="right" className="w-56 mt-2">
             <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/account")}>
+            <DropdownMenuItem onClick={() => navigate("/account")} className="cursor-pointer">
               <UserCog className="mr-2 h-4 w-4" />
               Account
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </DropdownMenuItem>
