@@ -12,8 +12,13 @@ import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
+import { useNavigate } from "react-router-dom";
 
 function productDetailsDialog({ open, setOpen, productDetails }) {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
@@ -69,24 +74,32 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
   }
 
   function handleAddReview() {
-    dispatch(
-      addReview({
-        productId: productDetails?._id,
-        userId: user?.id,
-        userName: user?.userName,
-        reviewMessage: reviewMsg,
-        reviewValue: rating,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        setRating(0)
-        setReviewMsg("")
-        dispatch(getReviews(productDetails?._id));
-        toast({
-          title: "Review Added successfully",
-        });
-      }
-    });
+    if (!isAuthenticated) {
+      toast({
+        title: "Please Login first",
+        variant: "destructive",
+        duration: 2000,
+      });
+    } else {
+      dispatch(
+        addReview({
+          productId: productDetails?._id,
+          userId: user?.id,
+          userName: user?.userName,
+          reviewMessage: reviewMsg,
+          reviewValue: rating,
+        })
+      ).then((data) => {
+        if (data?.payload?.success) {
+          setRating(0);
+          setReviewMsg("");
+          dispatch(getReviews(productDetails?._id));
+          toast({
+            title: "Review Added successfully",
+          });
+        }
+      });
+    }
   }
 
   useEffect(() => {
@@ -95,9 +108,11 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
     }
   }, [productDetails]);
 
-  const averageReview = reviews && reviews.length > 0 ?
-      reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
-      reviews.length : 0
+  const averageReview =
+    reviews && reviews.length > 0
+      ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
+        reviews.length
+      : 0;
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
@@ -135,9 +150,11 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
-              <StarRatingComponent rating={averageReview}/>
+              <StarRatingComponent rating={averageReview} />
             </div>
-            <span className="text-muted-foreground">({averageReview.toFixed(2)})</span>
+            <span className="text-muted-foreground">
+              ({averageReview.toFixed(2)})
+            </span>
           </div>
           <div className="my-5">
             {productDetails?.totalStock === 0 ? (
@@ -148,10 +165,16 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
               <Button
                 className="w-full"
                 onClick={() =>
-                  handleAddToCart(
-                    productDetails?._id,
-                    productDetails?.totalStock
-                  )
+                  !isAuthenticated
+                    ? toast({
+                        title: "Please Login first",
+                        variant: "destructive",
+                        duration: 2000,
+                      })
+                    : handleAddToCart(
+                        productDetails?._id,
+                        productDetails?.totalStock
+                      )
                 }
               >
                 Add to Cart

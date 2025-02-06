@@ -12,7 +12,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
         return <Navigate to="/admin/dashboard" />
       }
       else{
-        return <Navigate to="/shop/home" />
+        return <Navigate to="/" />
       }
     }
   }
@@ -32,7 +32,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
       return <Navigate to="/admin/dashboard"/>
     }
     else{
-      return <Navigate to="/shop/home"/>      
+      return <Navigate to="/"/>      
     }
   }
 

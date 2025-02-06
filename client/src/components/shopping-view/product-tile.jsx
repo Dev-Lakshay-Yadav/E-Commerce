@@ -2,14 +2,18 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
+import { useSelector } from "react-redux";
+import { useToast } from "../ui/use-toast";
 
 function ShoppingProductTile({
   product,
   handleGetProductDetails,
   handleAddToCart,
 }) {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const {toast} = useToast()   
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="w-full max-w-sm mx-auto cursor-pointer hover:scale-105 duration-1000 md:hover:rounded-[2vw] overflow-hidden">
       <div onClick={() => handleGetProductDetails(product?._id)}>
         <div className="relative">
           <img
@@ -64,7 +68,11 @@ function ShoppingProductTile({
           </Button>
         ) : (
           <Button
-            onClick={() => handleAddToCart(product?._id, product?.totalStock)}
+            onClick={() => (!isAuthenticated ? toast({
+              title : "Please Login first",
+              variant : "destructive",
+              duration : 2000,
+            }) : handleAddToCart(product?._id, product?.totalStock) ) }
             className="w-full"
           >
             Add to cart
