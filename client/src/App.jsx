@@ -49,6 +49,18 @@ function App() {
       {/* Common component */}
       {/* <h1>Header Component</h1> */}
       <Routes>
+
+
+        <Route
+          path="/check"
+          element={
+              <LoadingState />
+          }
+        >
+          <Route path="login" element={<AuthLogin />} />
+          <Route path="register" element={<AuthRegister />} />
+        </Route>
+
         <Route
           path="/auth"
           element={
